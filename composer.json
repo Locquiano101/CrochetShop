@@ -1,0 +1,13 @@
+{
+    "name": "greg/crochetshop2",
+    "description": "hahahhaha",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "yes"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
