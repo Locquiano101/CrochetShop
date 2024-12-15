@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milo's Crochet Shop Admin</title>
+    <link rel="shortcut icon" href="/img/milo-profile.png" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section
+      id="section-dashboard"
+      class="border-2 border-red-900 h-full overflow-auto p-4"
+    >
+      <div class="flex flex-col h-full">
+        <div class="flex">
+          <button></button>
+          <h1 class="col-span-3 text-2xl font-bold">Sales Revenew</h1>
+        </div>
+        <table
+          class="min-w-full table-auto border-collapse border border-gray-300"
+        >
+          <thead>
+            <tr class="bg-gray-100">
+              <th
+                class="px-4 py-2 border border-gray-300 text-left text-sm font-medium"
+              >
+                Date
+              </th>
+              <th
+                class="px-4 py-2 border border-gray-300 text-left text-sm font-medium"
+              >
+                Product Name
+              </th>
+              <th
+                class="px-4 py-2 border border-gray-300 text-left text-sm font-medium"
+              >
+                Quantity Sold
+              </th>
+              <th
+                class="px-4 py-2 border border-gray-300 text-left text-sm font-medium"
+              >
+                Price per Unit
+              </th>
+              <th
+                class="px-4 py-2 border border-gray-300 text-left text-sm font-medium"
+              >
+                Total Sales
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white">
+              <td class="px-4 py-2 border border-gray-300 date">2024-12-01</td>
+              <td class="px-4 py-2 border border-gray-300 product">
+                Product A
+              </td>
+              <td class="px-4 py-2 border border-gray-300 quantity">50</td>
+              <td class="px-4 py-2 border border-gray-300 price">$20.00</td>
+              <td class="px-4 py-2 border border-gray-300 total">$1,000.00</td>
+            </tr>
+
+            <tr class="bg-gray-50">
+              <td
+                colspan="4"
+                class="text-left px-4 py-2 border border-gray-300 font-bold"
+              >
+                Grand Total
+              </td>
+              <td
+                class="px-4 py-2 border border-gray-300 font-semibold"
+                id="grand-total"
+              >
+                $4,850.00
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <script>
+      function handleEdit(row) {
+        const date = row.querySelector(".date").innerText;
+        const productName = row.querySelector(".product").innerText;
+        const quantitySold = row.querySelector(".quantity").innerText;
+        const pricePerUnit = row.querySelector(".price").innerText;
+        const totalSales = row.querySelector(".total").innerText;
+
+        console.log("Editing Row:", {
+          date,
+          productName,
+          quantitySold,
+          pricePerUnit,
+          totalSales,
+        });
+      }
+
+      function handleDelete(row) {
+        const date = row.querySelector(".date").innerText;
+        const productName = row.querySelector(".product").innerText;
+        const quantitySold = row.querySelector(".quantity").innerText;
+        const pricePerUnit = row.querySelector(".price").innerText;
+        const totalSales = row.querySelector(".total").innerText;
+
+        console.log("Deleted Row:", {
+          date,
+          productName,
+          quantitySold,
+          pricePerUnit,
+          totalSales,
+        });
+
+        row.remove(); // Remove the row from the table
+      }
+    </script>
+  </body>
+</html>

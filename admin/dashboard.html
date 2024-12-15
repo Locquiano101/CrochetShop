@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milo's Crochet Shop Admin</title>
+    <link rel="shortcut icon" href="/img/milo-profile.png" />
+
+    <link rel="stylesheet" href="./src/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      div {
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body class="flex flex-col h-screen">
+    <!-- Header -->
+    <header
+      class="p-4 px-8 bg-purple-500 text-white flex justify-between items-center min-h-[60px] sticky top-0 z-50"
+    >
+      <div class="flex items-center">
+        <img src="/img/milo-profile.png" alt="Logo" class="w-12 h-auto mr-3" />
+        <div class="bg-white w-1 h-12 mr-3"></div>
+        <h1 class="text-sm font-bold">Milo's Crafty Crochet</h1>
+      </div>
+
+      <button class="lg:hidden text-white" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </header>
+
+    <div class="flex h-full">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="w-64 bg-purple-700 text-white flex flex-col h-full lg:translate-x-0 transition-transform lg:static z-30 lg:block hidden"
+      >
+        <nav class="flex-1 p-4 flex flex-col gap-4">
+          <button
+            id="dashboard"
+            class="w-full flex items-center px-3 py-2 rounded nav-link hover:outline hover:outline-2 hover:outline-gray-400 focus:bg-white focus:text-purple-700"
+            onclick="showSection('section-dashboard')"
+          >
+            <i class="fas fa-home mr-3"></i> Dashboard
+          </button>
+
+          <button
+            id="artifact"
+            class="flex items-center px-3 py-2 rounded nav-link hover:outline hover:outline-2 hover:outline-gray-400 focus:bg-white focus:text-purple-700"
+            onclick="showSection('section-orders')"
+          >
+            <i class="fa-solid fa-truck mr-3"></i> Orders
+          </button>
+          <button
+            id="appointment"
+            class="flex items-center px-3 py-2 rounded nav-link hover:outline hover:outline-2 hover:outline-gray-400 focus:bg-white focus:text-purple-700"
+            onclick="showSection('section-products')"
+          >
+            <i class="fa-solid fa-paperclip mr-3"></i> Products
+          </button>
+          <button
+            id="layout"
+            class="flex items-center px-3 py-2 rounded nav-link hover:outline hover:outline-2 hover:outline-gray-400 focus:bg-white focus:text-purple-700"
+            onclick="showSection('section-reviews')"
+          >
+            <i class="fa-solid fa-comment mr-3"></i> Reviews
+          </button>
+        </nav>
+
+        <div class="mt-auto p-4">
+          <button
+            id="logout-button"
+            class="flex items-center px-3 py-2 w-full rounded bg-red-600 hover:bg-red-700"
+          >
+            <i class="fas fa-sign-out-alt mr-3"></i> Logout
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main id="main-page" class="flex-1 p-4 bg-orange-100">
+        <!-- Dashboard Section -->
+        <section
+          id="section-dashboard"
+          class="border-2 border-red-900 h-full overflow-auto p-4"
+        >
+          <div class="grid grid-cols-3 gap-4 h-full">
+            <h1 class="col-span-3 text-2xl font-bold">Dashboard Overview</h1>
+
+            <!-- Sales Revenue Section -->
+            <div
+              class="row-span-3 col-span-2 bg-gray-100 p-4 rounded-md shadow"
+            >
+              <h1 class="text-lg font-semibold mb-4">Sales Revenue</h1>
+              <canvas id="salesChart" class="w-full"></canvas>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="bg-gray-50 p-4 rounded-md shadow">
+              <h1 class="text-lg font-semibold mb-4">Orders</h1>
+            </div>
+
+            <!-- Stock Section -->
+            <div class="bg-gray-50 p-4 rounded-md shadow">
+              <h1 class="text-lg font-semibold mb-4">Stock</h1>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="bg-gray-50 p-4 rounded-md shadow">
+              <h1 class="text-lg font-semibold mb-4">Reviews</h1>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="section-orders"
+          class="hidden border-2 border-red-900 h-full"
+        >
+          Orders Content
+        </section>
+        <section
+          id="section-products"
+          class="hidden border-2 border-red-900 h-full"
+        >
+          Products Content
+        </section>
+        <section
+          id="section-reviews"
+          class="hidden border-2 border-red-900 h-full"
+        >
+          Reviews Content
+        </section>
+      </main>
+    </div>
+
+    <script>
+      // Initialize Chart.js
+      const ctx = document.getElementById("salesChart").getContext("2d");
+      const salesChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["January", "February", "March", "April", "May", "June"],
+          datasets: [
+            {
+              label: "Sales in USD",
+              data: [3000, 4000, 3500, 5000, 4500, 6000],
+              borderColor: "purple",
+              borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Sales (in USD)",
+              },
+            },
+            x: {
+              title: {
+                display: true,
+                text: "Months",
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              position: "top",
+            },
+          },
+        },
+      });
+
+      // Utility functions
+      function hideAllSections() {
+        document.querySelectorAll("main > section").forEach((section) => {
+          section.classList.add("hidden");
+        });
+      }
+
+      function showSection(sectionId) {
+        hideAllSections();
+        const section = document.getElementById(sectionId);
+        if (section) section.classList.remove("hidden");
+
+        document.querySelectorAll("aside button").forEach((button) => {
+          button.classList.remove("bg-white", "text-purple-700");
+        });
+        const activeButton = document.querySelector(
+          `#${sectionId.replace("section-", "")}`
+        );
+        if (activeButton)
+          activeButton.classList.add("bg-white", "text-purple-700");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milo's Crochet Shop</title>
+    <link rel="shortcut icon" href="/res/img/milo-profile.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="h-screen bg-purple-300 font-sans flex flex-col">
+    <header class="bg-purple-700 text-white px-12 xl:px-32 py-4">
+      <div class="flex justify-between items-center">
+        <!-- Logo and Title -->
+        <a
+          href="about-us.html"
+          class="text-lg sm:text-2xl font-bold text-white flex items-center gap-4 sm:px-4"
+        >
+          <img
+            src="/img/milo-profile.png"
+            alt="Crafting Supplies"
+            class="rounded-full shadow-lg w-10 sm:w-12"
+          />
+          Milo's Crafty Crochet Shop
+        </a>
+
+        <!-- Hamburger Menu for mobile -->
+        <button
+          id="menuToggle"
+          class="xl:hidden text-white text-2xl focus:outline-none"
+          onclick="toggleMobileMenu()"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden xl:flex space-x-4 items-center">
+          <a
+            href="about-us.html"
+            class="nav-link px-4 py-2 rounded hover:bg-white hover:text-purple-800 active:bg-purple-500"
+          >
+            <i class="fa-solid fa-user-check mr-2"></i> About Us
+          </a>
+          <a
+            href="#"
+            class="nav-link px-4 py-2 rounded hover:bg-white hover:text-purple-800 active:bg-purple-500"
+          >
+            <i class="fa-solid fa-bell mr-2"></i> Notifications (1)
+          </a>
+          <a
+            id="cart-button-desktop"
+            href="user_cart.html"
+            class="nav-link px-4 py-2 rounded hover:bg-white hover:text-purple-800 active:bg-purple-500"
+          >
+            <i class="fas fa-shopping-cart mr-2"></i> Cart (0)
+          </a>
+          <a
+            id="login-button-desktop"
+            class="bg-white nav-link text-purple-800 px-4 py-2 rounded hover:bg-white hover:text-purple-800 active:bg-purple-500"
+          >
+            <i class="fas fa-user mr-2"></i>
+            <span id="userNameDisplay">Login</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div
+        id="mobileMenu"
+        class="hidden absolute flex flex-col gap-2 px-4 py-2 bg-purple-800 rounded-lg right-10 top-16 z-10"
+      >
+        <a
+          href="#about"
+          class="nav-link flex-1 px-4 py-2 rounded hover:bg-white hover:text-purple-800 active:bg-purple-500"
+        >
+          <i class="fa-solid fa-bell mr-2"></i> Notifications (1)
+        </a>
+        <hr />
+        <a
+          id="cart-button-mobile"
+          href="user_cart.html"
+          class="nav-link flex-1 px-4 py-2 rounded hover:bg-white hover:text-purple-800 active:bg-purple-500"
+        >
+          <i class="fas fa-shopping-cart mr-2"></i> Cart (0)
+        </a>
+        <hr />
+        <a
+          id="login-button-mobile"
+          class="nav-link flex-1 px-4 py-2 rounded hover:bg-white hover:text-purple-800 active:bg-purple-500"
+        >
+          <i class="fa-solid fa-user mr-2"></i>
+          <span id="userNameDisplay2">Login</span>
+        </a>
+        <hr />
+        <a
+          href="about-us.html"
+          class="nav-link flex-1 px-4 py-2 rounded hover:bg-white hover:text-purple-800 active:bg-purple-500"
+        >
+          <i class="fa-solid fa-user-check mr-2"></i> About Us
+        </a>
+      </div>
+    </header>
+
+    <!-- modal Container -->
+
+    <!-- Toggle order status -->
+    <div class="py-6 flex flex-col gap-4 h-auto">
+      <nav class="w-full">
+        <!-- Title -->
+        <h1 class="text-2xl font-bold hidden md:block md:px-12 lg:px-24">
+          Order Status
+        </h1>
+
+        <!-- Mobile Navigation -->
+        <div class="flex justify-between items-center md:hidden px-12">
+          <h1 class="text-xl font-bold">Order Status</h1>
+          <button
+            id="burger-menu"
+            class="text-2xl p-4"
+            onclick="toggleMenu()"
+            aria-expanded="false"
+            aria-controls="menuContent"
+          >
+            ☰
+          </button>
+        </div>
+
+        <!-- mobile menu content -->
+        <div
+          id="menuContent"
+          class="hidden absolute bg-white shadow-lg flex flex-col w-1/4 right-16 top-[20%] z-10 border rounded-md"
+        >
+          <a
+            id="filter-all-mobile"
+            class="px-6 py-2 font-medium text-sm text-black hover:text-white hover:bg-purple-500 focus:bg-purple-600"
+          >
+            All
+          </a>
+          <hr />
+          <a
+            id="filter-in-cart-mobile"
+            class="px-6 py-2 font-medium text-sm text-black hover:text-white hover:bg-purple-500"
+          >
+            In Cart
+          </a>
+          <hr />
+
+          <a
+            id="filter-pending-mobile"
+            class="px-6 py-2 font-medium text-sm text-black hover:text-white hover:bg-purple-500"
+          >
+            Pending
+          </a>
+          <hr />
+          <a
+            id="filter-on-process-mobile"
+            class="px-6 py-2 font-medium text-sm text-black hover:text-white hover:bg-purple-500"
+          >
+            On Process
+          </a>
+          <hr />
+          <a
+            id="filter-delivered-mobile"
+            class="px-6 py-2 font-medium text-sm text-black hover:text-white hover:bg-purple-500"
+          >
+            To Review
+          </a>
+        </div>
+
+        <!-- Desktop menu content -->
+        <div
+          id="filter-buttons"
+          class="hidden md:flex gap-4 justify-around px-12 lg:px-24 mt-4"
+        >
+          <button
+            class="flex-1 px-4 py-2 text-sm font-semibold bg-gray-200 hover:bg-purple-300 rounded focus:bg-purple-500 focus:text-white"
+            id="filter-all-desktop"
+          >
+            All
+          </button>
+
+          <button
+            id="filter-in-cart-desktop"
+            class="flex-1 px-4 py-2 text-sm font-semibold bg-gray-200 hover:bg-purple-300 rounded focus:bg-purple-500 focus:outline-none focus:text-white"
+          >
+            Cart
+          </button>
+          <button
+            id="filter-pending-desktop"
+            class="flex-1 px-4 py-2 text-sm font-semibold bg-gray-200 hover:bg-purple-300 rounded focus:bg-purple-500 focus:outline-none focus:text-white"
+          >
+            Pending
+          </button>
+          <button
+            id="filter-on-process-desktop"
+            class="flex-1 px-4 py-2 text-sm font-semibold bg-gray-200 hover:bg-purple-300 rounded focus:bg-purple-500 focus:outline-none focus:text-white"
+          >
+            On Process
+          </button>
+
+          <button
+            id="filter-delivered-desktop"
+            class="flex-1 px-4 py-2 text-sm font-semibold bg-gray-200 hover:bg-purple-300 rounded focus:bg-purple-500 focus:outline-none focus:text-white"
+          >
+            To Review
+          </button>
+
+          <button
+            id="filter-cancelled-desktop"
+            class="flex-1 px-4 py-2 text-sm font-semibold bg-gray-200 hover:bg-purple-300 rounded focus:bg-purple-500 focus:outline-none focus:text-white"
+          >
+            Cancelled
+          </button>
+        </div>
+      </nav>
+
+      <div
+        id="cart-card-container"
+        class="h-full mx-auto flex flex-col gap-4 w-full px-12 lg:px-24"
+      >
+        <!-- Add additional cards similarly as needed -->
+        <div
+          class="flex flex-col md:flex-row py-12 md:py-4 px-12 gap-12 bg-purple-100 rounded-lg shadow-md"
+        >
+          there are nothing here :)
+        </div>
+      </div>
+    </div>
+
+    <!-- modal Container -->
+    <section
+      id="modalContainer2"
+      class="fixed hidden inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50"
+    >
+      <div
+        id="review-modal"
+        class="modal w-2/3 bg-purple-100 px-6 py-4 space-y-4 rounded-2xl"
+      >
+        <div class="flex justify-between align-center">
+          <h2
+            id="modal-title"
+            class="text-xl font-bold text-center text-gray-800"
+          >
+            Rate Product
+          </h2>
+          <a
+            id="close-modal"
+            class="close fa-solid fa-x text-red-500 hover:text-red-700 cursor-pointer"
+          ></a>
+        </div>
+        <div class="flex gap-4">
+          <img
+            id="modal-product-img"
+            src=""
+            alt="Product Image"
+            class="rounded-xl shadow-md w-1/3 h-auto"
+          />
+          <div class="flex flex-col w-full gap-6 justify-center">
+            <p
+              id="modal-product-name"
+              class="text-lg font-semibold text-purple-800"
+            >
+              Product Name: ---
+            </p>
+            <div
+              class="flex gap-2 items-center text-gray-500 text-2xl"
+              id="modal-stars"
+            >
+              <p class="text-lg text-purple-800 font-semibold mr-2">Rate:</p>
+              <span
+                role="radio"
+                class="fa-regular fa-star hover:text-yellow-500 cursor-pointer"
+                tabindex="0"
+              ></span>
+              <span
+                role="radio"
+                class="fa-regular fa-star hover:text-yellow-500 cursor-pointer"
+                tabindex="0"
+              ></span>
+              <span
+                role="radio"
+                class="fa-regular fa-star hover:text-yellow-500 cursor-pointer"
+                tabindex="0"
+              ></span>
+              <span
+                role="radio"
+                class="fa-regular fa-star hover:text-yellow-500 cursor-pointer"
+                tabindex="0"
+              ></span>
+              <span
+                role="radio"
+                class="fa-regular fa-star hover:text-yellow-500 cursor-pointer"
+                tabindex="0"
+              ></span>
+            </div>
+            <div class="flex gap-4 h-1/3">
+              <label
+                for="feedback"
+                class="text-lg font-semibold text-purple-800 py-2 text-gray-900"
+                >Comment:</label
+              >
+              <textarea
+                id="feedback"
+                class="w-full p-2 h-full border rounded-lg resize-none border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                placeholder="Leave Your Feedback Here"
+              ></textarea>
+            </div>
+            <div class="flex justify-end space-x-3">
+              <button
+                id="closeModalButton"
+                class="bg-gray-300 text-gray-700 px-5 py-2 rounded hover:bg-gray-500 hover:text-white transition"
+              >
+                Cancel
+              </button>
+              <button
+                id="submitRatingButton"
+                class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="check-out-container"
+      class="fixed hidden inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50"
+    >
+      <section
+        id="check-out-modal"
+        class="modal flex flex-col gap-6 bg-white px-6 py-4 rounded-lg w-1/2 h-auto text-center shadow-lg"
+      >
+        <div class="flex justify-between align-center">
+          <h2 class="text-xl font-bold text-purple-900">ITEM CHECK OUT</h2>
+          <a class="close fa-solid fa-x text-red-500 hover:text-red-700"></a>
+        </div>
+
+        <div id="products-container" class="gap-4 flex">
+          <img
+            src="/img/67573aa4cb9b35.01745183.jpg"
+            alt="Product"
+            class="w-1/3 h-auto rounded-lg"
+          />
+
+          <div
+            class="h-auto flex flex-col w-full text-purple-900text-left gap-4 justify-center"
+          >
+            <div class="flex justify-between">
+              <h3 class="text-lg font-bold text-purple-900">
+                Crochet Hair Clip
+              </h3>
+
+              <p class="text-purple-900 text-lg font-semibold">₱ 50.00</p>
+            </div>
+            <p class="text-left text-purple-900 text-lg">
+              <strong> Description: </strong>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+            </p>
+            <div class="flex gap-4">
+              <label
+                for="Note"
+                class="font-semibold py-2 text-lg text-purple-900"
+                >Note:</label
+              >
+              <textarea
+                id="Note"
+                class="w-full p-2 h-32 border rounded-lg resize-none border-2 border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                placeholder="Short description of how you want your crochet documented"
+              ></textarea>
+            </div>
+
+            <a
+              class="flex-2 py-4 text-center text-xl bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition-colors duration-300 add-to-cart"
+            >
+              <i class="fa-solid fa-truck mr-4"></i>Check Out
+            </a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section
+      id="cancel-container"
+      class="hidden fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50"
+    >
+      <section
+        id="cancel-modal"
+        class="modal flex flex-col gap-6 bg-white px-6 py-4 rounded-lg w-1/2 h-auto text-center shadow-lg"
+      >
+        <div class="flex justify-between align-center">
+          <h2 class="text-xl font-bold text-purple-900">CANCEL ORDER</h2>
+          <a class="close fa-solid fa-x text-red-500 hover:text-red-700"></a>
+        </div>
+
+        <div id="cancel-info-container" class="gap-4 flex">
+          <img
+            src="/img/67573aa4cb9b35.01745183.jpg"
+            alt="Product"
+            class="w-1/3 h-auto rounded-lg"
+          />
+
+          <div
+            class="h-auto flex flex-col w-full text-purple-900 text-left gap-4 justify-center"
+          >
+            <div class="flex justify-between">
+              <h3 class="text-lg font-bold text-purple-900">
+                Crochet Hair Clip
+              </h3>
+
+              <p class="text-purple-900 text-lg font-semibold">₱ 50.00</p>
+            </div>
+            <p class="text-left text-purple-900 text-lg">
+              <strong> Description: </strong>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+            </p>
+
+            <div class="flex gap-4">
+              <label
+                for="cancel-note"
+                class="font-semibold py-2 text-lg text-purple-900"
+                >Reason for Cancellation:</label
+              >
+              <textarea
+                id="cancel-note"
+                class="w-full p-2 h-32 border rounded-lg resize-none border-2 border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                placeholder="Please provide a reason for cancellation"
+              ></textarea>
+            </div>
+
+            <a
+              class="flex-2 py-4 text-center text-xl bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition-colors duration-300 cancel-action"
+            >
+              <i class="fa-solid fa-ban mr-4"></i>Cancel Order
+            </a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-purple-700 text-gray-100 py-6 mt-auto">
+      <div class="container mx-auto text-center">
+        <p>&copy; 2024 Milo's Crafty Crochet. All rights reserved.</p>
+        <p class="mt-2">
+          Follow us on
+          <a href="#" class="text-black font-bold hover:underline">Facebook</a>
+          and
+          <a href="#" class="text-black font-bold hover:underline">Tiktok</a>.
+        </p>
+      </div>
+    </footer>
+
+    <!-- scripts -->
+    <script>
+      function toggleMenu() {
+        const burgerMenu = document.getElementById("burger-menu");
+        const menuContent = document.getElementById("menuContent");
+
+        // Check if menuContent exists to avoid errors
+        if (menuContent) {
+          const isExpanded =
+            burgerMenu.getAttribute("aria-expanded") === "true";
+
+          // Toggle the aria-expanded attribute
+          burgerMenu.setAttribute("aria-expanded", !isExpanded);
+
+          // Toggle visibility of the menu content
+          menuContent.classList.toggle("hidden");
+        }
+      }
+    </script>
+
+    <script src="/src/javaScript/index.js"></script>
+    <script src="/src/javaScript/get-cart.js"></script>
+  </body>
+</html>
