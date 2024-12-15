@@ -11,7 +11,7 @@ const userCartID = cartUser?.user_id || null;
 // ================== FETCH CART DATA ==================
 async function fetchCartData() {
   try {
-    const response = await fetch("http://localhost:3000/src/PHP/get_cart.php");
+    const response = await fetch("/src/PHP/get_cart.php");
 
     if (!response.ok) throw new Error("Failed to fetch cart data");
 
@@ -159,14 +159,11 @@ async function finalizeCancellation(orderID) {
 
     const payload = { order_item_id: orderID, cancel_note: cancelNote };
 
-    const response = await fetch(
-      "http://localhost:3000/src/PHP/post_cancel_order.php",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }
-    );
+    const response = await fetch("/src/PHP/post_cancel_order.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
     const responseText = await response.text();
     let result;
@@ -251,14 +248,11 @@ async function finalizeCheckout(orderID) {
     const note = noteElement.value.trim();
     const payload = { order_item_id: orderID, status: note };
     console.log(payload);
-    const response = await fetch(
-      "http://localhost:3000/src/PHP/post_order_items.php",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }
-    );
+    const response = await fetch("/src/PHP/post_order_items.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
     if (!response.ok) {
       console.error("Server error:", response.status, response.statusText);
@@ -422,7 +416,7 @@ async function submitReview(productId, orderItemId, rating, comment) {
 
   try {
     const response = await fetch(
-      "http://localhost:3000/src/PHP/post_reviews.php", // Check if this URL is correct
+      "/src/PHP/post_reviews.php", // Check if this URL is correct
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

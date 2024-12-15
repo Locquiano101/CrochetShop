@@ -10,9 +10,7 @@ const get_products_userFullAddress = get_products_user?.user_address;
 
 async function fetchProductsData() {
   try {
-    const response = await fetch(
-      "http://localhost:3000/src/PHP/get_products.php"
-    );
+    const response = await fetch("/src/PHP/get_products.php");
 
     const products = await response.json();
 
@@ -102,16 +100,13 @@ async function fetchProductsData() {
 
         console.log("Adding product to cart:", productData);
         try {
-          const response = await fetch(
-            "http://localhost:3000/src/PHP/upload_cart.php",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(productData),
-            }
-          );
+          const response = await fetch("/src/PHP/upload_cart.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(productData),
+          });
 
           const responseText = await response.text(); // Get the response as text
           console.log("Raw Response Text:", responseText); // Log the raw response

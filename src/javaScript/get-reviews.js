@@ -7,9 +7,7 @@ async function loadReviews() {
 
   try {
     // Replace this URL with your actual API endpoint or JSON file path
-    const response = await fetch(
-      "http://localhost:3000/src/PHP/get_reviews.php"
-    );
+    const response = await fetch("/src/PHP/get_reviews.php");
 
     if (!response.ok) {
       throw new Error("Failed to fetch reviews");

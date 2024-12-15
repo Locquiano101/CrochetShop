@@ -94,7 +94,7 @@ const logout = () => {
 
 async function fetchCartData() {
   try {
-    const response = await fetch("http://localhost:3000/src/PHP/get_cart.php");
+    const response = await fetch("/src/PHP/get_cart.php");
 
     if (!response.ok) throw new Error("Failed to fetch cart data");
 
