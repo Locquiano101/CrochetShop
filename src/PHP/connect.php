@@ -1,9 +1,10 @@
 <?php
 // Database connection details
-$servername = "localhost"; // Change this to your database server
-$username = "root";        // Change this to your database username
-$password = "";            // Change this to your database password
-$dbname = "crochet_db"; // Change this to your database name
+$servername = "localhost";
+//$servername = "srv1632.hstgr.io"; // Change this to your database server
+$username = "u143688490_greg";        // Change this to your database username
+$password = "Fujiwara000";            // Change this to your database password
+$dbname = "u143688490_crochetshop2"; // Change this to your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
