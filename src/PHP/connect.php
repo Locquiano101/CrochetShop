@@ -1,7 +1,6 @@
 <?php
 // Database connection details
-$servername = "localhost";
-//$servername = "srv1632.hstgr.io"; // Change this to your database server
+$servername = "srv1632.hstgr.io"; // Change this to your database server
 $username = "u143688490_greg";        // Change this to your database username
 $password = "Fujiwara000";            // Change this to your database password
 $dbname = "u143688490_crochetshop2"; // Change this to your database name
