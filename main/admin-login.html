@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Admin Login</title>
+  </head>
+  <body class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-xs">
+      <form
+        id="loginForm"
+        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
+        <h2 class="text-center text-2xl font-bold mb-4">Admin Login</h2>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+          >
+            Username
+          </label>
+          <input
+            id="username"
+            type="text"
+            placeholder="Enter username"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          />
+        </div>
+        <div class="mb-6">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="password"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Enter password"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Log In
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const loginForm = document.getElementById("loginForm");
+
+      loginForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form from submitting
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Example admin credentials
+        const adminUsername = "admin";
+        const adminPassword = "password123";
+
+        if (username === adminUsername && password === adminPassword) {
+          console.log("Login successful!");
+          alert("Login successful!");
+          window.location.href = "dashboard.html"; // Redirect to another page   } else {
+          console.log("Invalid credentials.");
+          alert("Invalid credentials.");
+        }
+      });
+    </script>
+  </body>
+</html>
