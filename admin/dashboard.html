@@ -160,10 +160,37 @@
           </div>
         </section>
 
-        <section
-          id="section-orders"
-          class="hidden border-2 border-red-900"
-        ></section>
+        <section id="section-orders" class="e border-2 border-red-900">
+          <div class="container mx-auto">
+            <h1 class="text-3xl font-bold text-gray-800 mb-5">Cart Items</h1>
+            <table
+              class="table-auto w-full border-collapse border border-gray-200"
+            >
+              <thead>
+                <tr class="bg-gray-200 text-gray-700">
+                  <th class="border border-gray-300 px-4 py-2">Order ID</th>
+                  <th class="border border-gray-300 px-4 py-2">
+                    Customer Name
+                  </th>
+                  <th class="border border-gray-300 px-4 py-2">Order Date</th>
+                  <th class="border border-gray-300 px-4 py-2">Total Amount</th>
+                  <th class="border border-gray-300 px-4 py-2">
+                    Shipping Address
+                  </th>
+                  <th class="border border-gray-300 px-4 py-2">Product Name</th>
+                  <th class="border border-gray-300 px-4 py-2">Quantity</th>
+                  <th class="border border-gray-300 px-4 py-2">Order Status</th>
+                  <th class="border border-gray-300 px-4 py-2">
+                    Update Order Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="orders-body" class="text-center">
+                <!-- Data will be inserted here dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </section>
         <section
           id="section-products"
           class="border-2 border-red-900 h-full overflow-x-auto hidden"
@@ -196,7 +223,10 @@
           </section>
         </section>
 
-        <section id="section-reviews" class="border-2 border-red-900 h-full">
+        <section
+          id="section-reviews"
+          class="border-2 border-red-900 h-full hidden"
+        >
           <h1 class="text-center text-5xl py-12 font-bold text-purple-500">
             REVIEWS
           </h1>

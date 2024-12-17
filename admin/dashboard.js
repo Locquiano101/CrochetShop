@@ -1,4 +1,132 @@
-// Utility functions
+// Utility function to fetch orders
+async function fetchOrders() {
+  try {
+    const response = await fetch("/src/PHP/get_cart_customer_only.php");
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to fetch orders");
+    }
+
+    if (data.error) {
+      displayError(data.error);
+    } else {
+      displayOrders(data);
+    }
+  } catch (error) {
+    displayError(error.message);
+  }
+}
+
+// Display orders in the table
+function displayOrders(orders) {
+  const tbody = document.getElementById("orders-body");
+  tbody.innerHTML = ""; // Clear previous content
+
+  orders.forEach((order) => {
+    const row = `
+      <tr class="border-t border-gray-200 hover:bg-gray-100">
+        <td class="border border-gray-300 px-4 py-2">${order.order_id}</td>
+        <td class="border border-gray-300 px-4 py-2">${order.user_firstName} ${order.user_lastName}</td>
+        <td class="border border-gray-300 px-4 py-2">${order.order_date}</td>
+        <td class="border border-gray-300 px-4 py-2">${order.total_amount}</td>
+        <td class="border border-gray-300 px-4 py-2">${order.shipping_Address}</td>
+        <td class="border border-gray-300 px-4 py-2">${order.prod_name}</td>
+        <td class="border border-gray-300 px-4 py-2">${order.quantity}</td>
+        <td class="border border-gray-300 px-4 py-2">${order.order_status}</td>
+        <td class="border border-gray-300 px-4 py-2">
+          <button class="delete-btn text-red-500" data-id="${order.order_id}">Delete</button>
+          <button class="update-status-btn text-blue-500" data-id="${order.order_id}">Update Status</button>
+        </td>
+      </tr>
+    `;
+    tbody.insertAdjacentHTML("beforeend", row);
+  });
+
+  attachEventListeners();
+}
+
+// Attach event listeners to delete and update buttons
+function attachEventListeners() {
+  const deleteButtons = document.querySelectorAll(".delete-btn");
+  const updateStatusButtons = document.querySelectorAll(".update-status-btn");
+
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const orderId = button.getAttribute("data-id");
+      deleteOrder(orderId);
+    });
+  });
+
+  updateStatusButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const orderId = button.getAttribute("data-id");
+      updateOrderStatus(orderId);
+    });
+  });
+}
+
+// Delete an order
+async function deleteOrder(orderId) {
+  try {
+    const response = await fetch(
+      `/src/PHP/delete_order.php?order_id=${orderId}`,
+      { method: "DELETE" }
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to delete order");
+    }
+
+    alert("Order deleted successfully");
+    fetchOrders(); // Refresh the orders
+  } catch (error) {
+    displayError(error.message);
+  }
+}
+
+// Update order status
+async function updateOrderStatus(orderId) {
+  const statusOptions = ["Delivered", "On Progress"];
+  const newStatus = prompt(
+    `Enter new status for the order (Options: ${statusOptions.join(", ")}):`,
+    statusOptions[0]
+  );
+
+  if (newStatus && statusOptions.includes(newStatus)) {
+    try {
+      const response = await fetch(`/src/PHP/update_order_status.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order_id: orderId, order_status: newStatus }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to update order status");
+      }
+
+      alert("Order status updated successfully");
+      fetchOrders(); // Refresh the orders
+    } catch (error) {
+      displayError(error.message);
+    }
+  } else {
+    alert("Invalid status. Please try again.");
+  }
+}
+
+// Display error message
+function displayError(message) {
+  const errorMessage = document.getElementById("error-message");
+  errorMessage.textContent = message;
+  errorMessage.classList.remove("hidden");
+}
+
+// Fetch orders on page load
+fetchOrders();
+
 function hideAllSections() {
   document.querySelectorAll("main > section").forEach((section) => {
     section.classList.add("hidden");
