@@ -89,6 +89,12 @@ async function fetchProductsData() {
         const button = event.target.closest(".add-to-cart");
         const productId = button.getAttribute("data-product-id");
 
+        if (!get_products_userID || isNaN(parseInt(get_products_userID, 10))) {
+          alert("Please sign in to proceed.");
+          // Optionally redirect to a sign-in page
+          window.location.href = "/main/login.html"; // Replace with your sign-in page URL
+          return; // Stop further execution
+        }
         const productData = {
           customer_id: parseInt(get_products_userID, 10), // Ensure it's an integer
           prod_id: parseInt(productId, 10), // Ensure it's an integer
@@ -100,7 +106,7 @@ async function fetchProductsData() {
 
         console.log("Adding product to cart:", productData);
         try {
-          const response = await fetch("/src/PHP/upload_cart.php", {
+          const response = await fetch("/src/PHP/post_order.php", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

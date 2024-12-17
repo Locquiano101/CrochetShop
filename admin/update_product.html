@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <h1 class="text-center text-2xl font-bold my-4">Update Product</h1>
+
+    <div class="fixed inset-0 bg-purple-500 flex justify-center items-center">
+      <!-- Product update form -->
+      <form
+        id="updateProductForm"
+        class="w-1/3 bg-purple-100 p-8 rounded-xl flex flex-col gap-4"
+      >
+        <div>
+          <label
+            for="productImagePreview"
+            class="block text-sm font-medium text-gray-700"
+            >Product Image Preview</label
+          >
+          <img
+            id="productImagePreview"
+            src=""
+            alt="Product Image"
+            class="w-1/3 my-2 border border-gray-300 rounded-md"
+          />
+        </div>
+
+        <div>
+          <label
+            for="productName"
+            class="block text-sm font-medium text-gray-700"
+            >Product Name</label
+          >
+          <input
+            type="text"
+            id="productName"
+            name="productName"
+            class="p-2 rounded-lg border border-purple-500 w-full"
+            required
+          />
+        </div>
+
+        <div>
+          <label
+            for="prod_description"
+            class="block text-sm font-medium text-gray-700"
+            >Product Description</label
+          >
+          <textarea
+            id="prod_description"
+            name="prod_description"
+            class="border border-purple-500 p-2 w-full rounded-md"
+            rows="6"
+          ></textarea>
+        </div>
+
+        <div>
+          <label
+            for="productPrice"
+            class="block text-sm font-medium text-gray-700"
+            >Product Price</label
+          >
+          <input
+            type="number"
+            id="productPrice"
+            name="productPrice"
+            class="border border-purple-500 p-2 rounded-lg w-full"
+            required
+          />
+        </div>
+
+        <div>
+          <label
+            for="ProductStock"
+            class="block text-sm font-medium text-gray-700"
+            >Product Stock</label
+          >
+          <input
+            type="number"
+            id="ProductStock"
+            name="ProductStock"
+            class="p-2 rounded-lg border border-purple-500 w-full"
+            required
+          />
+        </div>
+
+        <div>
+          <label
+            for="UploadNewProductImage"
+            class="block text-sm font-medium text-gray-700"
+            >New Product Image</label
+          >
+          <input
+            type="file"
+            id="UploadNewProductImage"
+            name="UploadNewProductImage"
+            class="p-2 rounded-lg border border-purple-500 w-full"
+            accept="image/*"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="bg-purple-500 py-2 text-white hover:bg-purple-600 rounded-lg"
+        >
+          Update
+        </button>
+      </form>
+    </div>
+
+    <script>
+      // Retrieve product details from localStorage
+      const product = JSON.parse(localStorage.getItem("selectedProduct"));
+
+      console.log(product);
+      if (product) {
+        // Populate the form fields with the product details
+        document.getElementById("productName").value =
+          product.description || "";
+        document.getElementById("productPrice").value = product.price || "";
+        document.getElementById("prod_description").value = product.name || "";
+        document.getElementById("ProductStock").value = product.stock || "";
+        document.getElementById(
+          "productImagePreview"
+        ).src = `/img/${product.img}`;
+      }
+
+      // Handle form submission
+      document
+        .getElementById("updateProductForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const updatedName = document.getElementById("productName").value;
+          const updatedPrice = document.getElementById("productPrice").value;
+          const updatedDescription =
+            document.getElementById("prod_description").value;
+          const updatedStock = document.getElementById("ProductStock").value;
+          const updatedImage = document.getElementById("UploadNewProductImage")
+            .files[0];
+
+          // Example of processing the updated data
+          console.log("Updated Product:", {
+            name: updatedName,
+            price: updatedPrice,
+            description: updatedDescription,
+            stock: updatedStock,
+            image: updatedImage,
+          });
+
+          // Clear localStorage after processing (optional)
+          localStorage.removeItem("selectedProduct");
+        });
+    </script>
+  </body>
+</html>

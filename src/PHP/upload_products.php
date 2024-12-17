@@ -5,9 +5,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if the file is uploaded
     if (isset($_FILES['fileUpload']) && $_FILES['fileUpload']['error'] == 0) {
         // Set upload directory
-        $uploadDirectory = $_SERVER['DOCUMENT_ROOT'] . '/res/img/';
+        $targetDirectory = $_SERVER['DOCUMENT_ROOT'] . "/img/";
 
-        // Get file information
+        // Check if the directory exists, if not create it
+        if (!is_dir($targetDirectory)) {
+            if (!mkdir($targetDirectory, 0777, true)) {
+                die('Failed to create directories...');
+            }
+        }
+
         // Get file information
         $fileName = $_FILES['fileUpload']['name'];
         $fileTmpName = $_FILES['fileUpload']['tmp_name'];
@@ -24,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $uniqueFileName = uniqid('', true) . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
 
             // Set the full destination path
-            $destination = $uploadDirectory . $uniqueFileName;
+            $destination = $targetDirectory . $uniqueFileName;
 
             // Move the uploaded file to the target directory
             if (move_uploaded_file($fileTmpName, $destination)) {
@@ -42,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->bind_param("sssis", $uniqueFileName, $prodName, $prodDescription, $prodPrice, $prodStock);
 
                 if ($stmt->execute()) {
-                    echo `<script>console.log("$uniqueFileName")</script>`;
                     $message = "Product uploaded and data inserted successfully!";
+                    // Optionally, you can also display the unique file name in the message
                 } else {
                     $message = "Error: " . $stmt->error;
                 }
@@ -60,84 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+// Output the message
+echo $message;
+
+// Close connection
 $conn->close();
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Upload Product</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="bg-gray-100 flex justify-center items-center h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-        <h1 class="text-3xl font-semibold text-center mb-6">Upload Product</h1>
-        <?php if (isset($message)): ?>
-            <div class="mb-4 text-center text-red-500 font-medium">
-                <?= htmlspecialchars($message) ?>
-            </div>
-        <?php endif; ?>
-        <form
-            action=""
-            method="post"
-            enctype="multipart/form-data">
-            <div class="mb-4">
-                <label for="prod_name" class="block text-sm font-medium text-gray-700">Product Name:</label>
-                <input
-                    type="text"
-                    name="prod_name"
-                    class="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    required />
-            </div>
-
-            <div class="mb-4">
-                <label for="prod_description" class="block text-sm font-medium text-gray-700">Product Description:</label>
-                <textarea
-                    name="prod_description"
-                    class="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    rows="4"></textarea>
-            </div>
-
-            <div class="mb-4">
-                <label for="prod_price" class="block text-sm font-medium text-gray-700">Product Price:</label>
-                <input
-                    type="number"
-                    name="prod_price"
-                    class="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    step="0.01"
-                    required />
-            </div>
-
-            <div class="mb-4">
-                <label for="prod_stock" class="block text-sm font-medium text-gray-700">Product Stock:</label>
-                <input
-                    type="number"
-                    name="prod_stock"
-                    class="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    required />
-            </div>
-
-            <div class="mb-4">
-                <label for="fileUpload" class="block text-sm font-medium text-gray-700">Choose an image to upload:</label>
-                <input
-                    type="file"
-                    name="fileUpload"
-                    class="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                    required />
-            </div>
-
-            <div class="flex justify-center">
-                <input
-                    type="submit"
-                    value="Upload Product"
-                    class="px-6 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 cursor-pointer" />
-            </div>
-        </form>
-    </div>
-</body>
-
-</html>

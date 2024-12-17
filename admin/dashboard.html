@@ -6,7 +6,6 @@
     <title>Milo's Crochet Shop Admin</title>
     <link rel="shortcut icon" href="/img/milo-profile.png" />
 
-    <link rel="stylesheet" href="./src/css/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -88,17 +87,64 @@
         <!-- Dashboard Section -->
         <section
           id="section-dashboard"
-          class="border-2 border-red-900 h-full overflow-auto p-4"
+          class="hidden border-2 border-red-900 h-full overflow-auto p-4"
         >
+          <h1 class="mb-4 text-2xl font-bold">Dashboard Overview</h1>
           <div class="grid grid-cols-3 gap-4 h-full">
-            <h1 class="col-span-3 text-2xl font-bold">Dashboard Overview</h1>
-
             <!-- Sales Revenue Section -->
             <div
               class="row-span-3 col-span-2 bg-gray-100 p-4 rounded-md shadow"
             >
-              <h1 class="text-lg font-semibold mb-4">Sales Revenue</h1>
-              <canvas id="salesChart" class="w-full"></canvas>
+              <div class="flex flex-col gap-4 h-auto">
+                <h1 class="col-span-3 text-2xl font-bold">Sales Revenew</h1>
+                <table
+                  class="min-w-full table-auto border-collapse border border-gray-300"
+                >
+                  <thead>
+                    <tr class="border border-purple-200 bg-purple-300">
+                      <th class="px-4 py-2 text-left text-sm font-medium">
+                        Date
+                      </th>
+                      <th class="px-4 py-2 text-left text-sm font-medium">
+                        Product Name
+                      </th>
+                      <th class="px-4 py-2 text-left text-sm font-medium">
+                        Quantity Sold
+                      </th>
+                      <th class="px-4 py-2 text-left text-sm font-medium">
+                        Price per Unit
+                      </th>
+                      <th class="px-4 py-2 text-left text-sm font-medium">
+                        Total Sales
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-white">
+                      <td class="px-4 py-2 date">2024-12-01</td>
+                      <td class="px-4 py-2 product">Product A</td>
+                      <td class="px-4 py-2 quantity">50</td>
+                      <td class="px-4 py-2 price">$20.00</td>
+                      <td class="px-4 py-2 total">$1,000.00</td>
+                    </tr>
+
+                    <tr class="bg-gray-50">
+                      <td
+                        colspan="4"
+                        class="text-left px-4 py-2 border border-gray-300 font-bold"
+                      >
+                        Grand Total
+                      </td>
+                      <td
+                        class="px-4 py-2 border border-gray-300 font-semibold"
+                        id="grand-total"
+                      >
+                        $4,850.00
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <!-- Orders Section -->
@@ -120,86 +166,51 @@
 
         <section
           id="section-orders"
-          class="hidden border-2 border-red-900 h-full"
-        >
-          Orders Content
-        </section>
+          class="hidden border-2 border-red-900"
+        ></section>
         <section
           id="section-products"
-          class="hidden border-2 border-red-900 h-full"
+          class="border-2 border-red-900 h-full overflow-x-auto hidden"
         >
-          Products Content
+          <h1></h1>
+          <!-- Featured Products Section -->
+          <section id="featured-products" class="bg-purple-100 py-6">
+            <h1 class="text-center font-bold text-purple-700 text-2xl mb-8">
+              Products Dashboard
+            </h1>
+            <div
+              id="products-container"
+              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4"
+            >
+              <a href="upload_products.html">
+                <div
+                  class="flex flex-col gap-4 items-center justify-center align-center bg-purple-300 rounded-lg shadow-md overflow-hidden p-4 h-full w-full"
+                >
+                  <h1
+                    class="fa-solid fa-plus font-bold text-purple-700 text-xl"
+                  ></h1>
+
+                  <h1 class="text-lg font-bold text-purple-700">
+                    Add new Product
+                  </h1>
+                </div>
+              </a>
+              <!-- Product items will be dynamically added here -->
+            </div>
+          </section>
         </section>
-        <section
-          id="section-reviews"
-          class="hidden border-2 border-red-900 h-full"
-        >
-          Reviews Content
+
+        <section id="section-reviews" class="border-2 border-red-900 h-full">
+          <h1 class="text-center">REVIEWS SHITS</h1>
+
+          <div
+            id="reviews-container"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4"
+          ></div>
         </section>
       </main>
     </div>
 
-    <script>
-      // Initialize Chart.js
-      const ctx = document.getElementById("salesChart").getContext("2d");
-      const salesChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: ["January", "February", "March", "April", "May", "June"],
-          datasets: [
-            {
-              label: "Sales in USD",
-              data: [3000, 4000, 3500, 5000, 4500, 6000],
-              borderColor: "purple",
-              borderWidth: 2,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: "Sales (in USD)",
-              },
-            },
-            x: {
-              title: {
-                display: true,
-                text: "Months",
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              position: "top",
-            },
-          },
-        },
-      });
-
-      // Utility functions
-      function hideAllSections() {
-        document.querySelectorAll("main > section").forEach((section) => {
-          section.classList.add("hidden");
-        });
-      }
-
-      function showSection(sectionId) {
-        hideAllSections();
-        const section = document.getElementById(sectionId);
-        if (section) section.classList.remove("hidden");
-
-        document.querySelectorAll("aside button").forEach((button) => {
-          button.classList.remove("bg-white", "text-purple-700");
-        });
-        const activeButton = document.querySelector(
-          `#${sectionId.replace("section-", "")}`
-        );
-        if (activeButton)
-          activeButton.classList.add("bg-white", "text-purple-700");
-      }
-    </script>
+    <script src="dashboard.js"></script>
   </body>
 </html>
